@@ -13,38 +13,18 @@ class Feedback extends React.Component {
   };
 
   handleClick = e => {
-    this.setState(prevState => {
-      if (e.target.textContent === 'good') {
-        return {
-          good: prevState.good + 1,
-          total: prevState.total + 1,
-          persantage: this.countPositiveFeedbackPercentage(
-            this.state.good,
-            this.state.total,
-          ),
-        };
-      }
-      if (e.target.textContent === 'neutral') {
-        return {
-          neutral: prevState.neutral + 1,
-          total: prevState.total + 1,
-          persantage: this.countPositiveFeedbackPercentage(
-            this.state.good,
-            this.state.total,
-          ),
-        };
-      }
-      if (e.target.textContent === 'bad') {
-        return {
-          bad: prevState.bad + 1,
-          total: prevState.total + 1,
-          persantage: this.countPositiveFeedbackPercentage(
-            this.state.good,
-            this.state.total,
-          ),
-        };
-      }
+    const option = e.target.textContent;
+    const { good, total } = this.state;
+
+    this.setState({
+      [option]: this.state[option] + 1,
+      total: this.countTotalFeedback(total),
+      persantage: this.countPositiveFeedbackPercentage(good, total),
     });
+  };
+
+  countTotalFeedback = value => {
+    return value + 1;
   };
 
   countPositiveFeedbackPercentage = (value, total) => {
