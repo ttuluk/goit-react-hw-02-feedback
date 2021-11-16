@@ -14,20 +14,19 @@ class Feedback extends React.Component {
 
   handleClick = e => {
     const option = e.target.textContent;
-    const { good, total } = this.state;
-
     this.setState({
       [option]: this.state[option] + 1,
-      total: this.countTotalFeedback(total),
-      persantage: this.countPositiveFeedbackPercentage(good, total),
     });
   };
 
-  countTotalFeedback = value => {
-    return value + 1;
+  countTotalFeedback = () => {
+    const { good, neutral, bad } = this.state;
+    const totalSum = good + neutral + bad;
+    return totalSum;
   };
 
-  countPositiveFeedbackPercentage = (value, total) => {
+  countPositiveFeedbackPercentage = total => {
+    const value = this.state.good;
     if (total > 0) {
       return Math.round((value / total) * 100);
     }
@@ -35,16 +34,22 @@ class Feedback extends React.Component {
   };
 
   render() {
+    const totalEl = this.countTotalFeedback();
+    const persantageEl = this.countPositiveFeedbackPercentage(totalEl);
+    const { good, neutral, bad } = this.state;
     return (
       <>
         <FeedbackOptions
           options={['good', 'neutral', 'bad']}
           onLeaveFeedback={this.handleClick}
         />
-        {this.state.total > 0 ? (
+        {totalEl > 0 ? (
           <Statistics
-            options={Object.keys(this.state)}
-            onCountFeedback={this.state}
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={totalEl}
+            persantage={persantageEl}
           />
         ) : (
           <Notification message={'No feedback given'} />
