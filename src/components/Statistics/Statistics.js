@@ -26,7 +26,8 @@ const Statistics = ({
           Total: <span className="Counter__Value">{total}</span>
         </li>
         <li key={'st-5'} className={styles.statistic_item}>
-          Persantage: <span className="Counter__Value">{persantage}%</span>
+          Positive feedback:{' '}
+          <span className="Counter__Value">{persantage}%</span>
         </li>
       </ul>
     </div>
