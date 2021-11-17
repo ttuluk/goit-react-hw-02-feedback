@@ -12,8 +12,10 @@ class Feedback extends React.Component {
 
   handleClick = e => {
     const option = e.target.textContent;
-    this.setState({
-      [option]: this.state[option] + 1,
+    this.setState(prevState => {
+      return {
+        [option]: prevState[option] + 1,
+      };
     });
   };
 
